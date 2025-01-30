@@ -60,6 +60,7 @@ const register = asyncHandler( async(req,res) => {
 
 
 const login = asyncHandler(async(req,res) => {
+    console.log("login api hitted")
     const {email, password} = req.body
 
     if([email, password].some((item) => item === undefined || item === null || item.trim() === " ")){
@@ -71,7 +72,7 @@ const login = asyncHandler(async(req,res) => {
     if(!validUser){
         throw new ApiError(400, "No user found")
     }
-
+    
     const isPasswordMatch = validUser.isPasswordCorrect(password)
 
     if(!isPasswordMatch){
@@ -101,7 +102,6 @@ const login = asyncHandler(async(req,res) => {
     )
 
 })
-
 
 
 const emailResetPassword = asyncHandler( async(req, res) => {

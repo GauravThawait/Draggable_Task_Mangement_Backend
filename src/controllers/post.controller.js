@@ -2,7 +2,7 @@ import { Post } from "../models/post.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import cloudinary from "../utils/Cloudinary.js";
+import {uploadToCloudinary} from "../utils/Cloudinary.js"
 
 
 const createPost = asyncHandler(async(req, res) => {
@@ -20,13 +20,9 @@ const createPost = asyncHandler(async(req, res) => {
 
 
     try {
-        const result = await cloudinary.uploader.upload(req.file.path, {
-          folder: "posts", // Optional folder name in Cloudinary
-          resource_type: "image",
-        });
-    
-        const imageUrl = result.secure_url; // Cloudinary URL for the uploaded image
-    
+        
+        const imageUrl = await uploadToCloudinary(req.file.buffer)
+
         // Save the image URL and caption in your database
         const newPost = await Post.create({
           caption,
