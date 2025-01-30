@@ -8,7 +8,11 @@ dotenv.config()
 connectDB()
 
 app.get("/api/v1/get", (req, res)=> {
-    res.send("Server is running")
+    res.send("test done")
+})
+
+app.get("/", (req, res) => {
+    res.send("Server is Running")
 })
 
 
