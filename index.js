@@ -1,0 +1,24 @@
+import app from "./src/app.js";
+import dotenv from 'dotenv'
+import connectDB from "./src/Db/connectDB.js";
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+dotenv.config()
+connectDB()
+
+app.get("/api/v1/get", (req, res)=> {
+    res.send("Server is running")
+})
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.get('/api/v1/image', (req, res) => {
+    const logoPath = path.join(__dirname, 'src', 'utils', 'logo.jpg');
+    res.sendFile(logoPath);
+  });
+
+app.listen(process.env.PORT, () => {
+    console.log(`Server is running in port ${process.env.PORT}`)
+})
